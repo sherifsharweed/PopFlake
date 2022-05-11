@@ -3,4 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="topmovies">Top Movies</string>
+    <string name="intheaters">In Theaters</string>
+    <string name="comingsoon">Coming Soon</string>
+    <string name="boxoffice">Top Box Office</string>
 </resources>
