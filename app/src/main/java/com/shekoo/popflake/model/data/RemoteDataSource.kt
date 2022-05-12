@@ -4,8 +4,7 @@ import com.shekoo.popflake.model.api.ApiServices
 import com.shekoo.popflake.model.entities.TopMovies
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(
-    private val apiServices: ApiServices) {
+class RemoteDataSource @Inject constructor(private val apiServices: ApiServices) {
 
     suspend fun getTopMovies(): TopMovies? {
         val res = apiServices.getTopMovies()

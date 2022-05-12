@@ -12,13 +12,12 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: RemoteDataSource) : ViewModel() {
+class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteDataSource) : ViewModel() {
 
     private val _topMoviesData = MutableStateFlow<TopMovies>(TopMovies(listOf(), ""))
     val topMoviesData: Flow<TopMovies> = _topMoviesData
     private val _topMoviesError = MutableStateFlow<String>("")
     val topMoviesError: Flow<String> = _topMoviesError
-
 
     init {
         getTopMovies()
@@ -27,14 +26,14 @@ class HomeViewModel @Inject constructor(private val repository: RemoteDataSource
     private fun getTopMovies() {
         viewModelScope.launch {
             try {
-                if (repository.getTopMovies() != null) {
-                    _topMoviesData.value = repository.getTopMovies()!!
+                if (remoteDataSource.getTopMovies() != null) {
+                    _topMoviesData.value = remoteDataSource.getTopMovies()!!
                     Log.i("TAG", "getTopMovies: ")
                 } else {
                     _topMoviesError.value ="No Connection"
                 }
             }catch (e: Exception){
-                _topMoviesError.value = e.message?:""
+                _topMoviesError.value = e.message?:"Error!"
             }
 
         }
