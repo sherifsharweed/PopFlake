@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,22 +20,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shekoo.popflake.MyApplication
 import com.shekoo.popflake.databinding.FragmentHomeBinding
 import com.shekoo.popflake.model.entities.TopMovies
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var topMoviesAdapter: TopMoviesAdapter
-    private lateinit var homeViewModel: HomeViewModel
+    val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -48,14 +50,14 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             homeViewModel.topMoviesData.collect {
-                topMoviesAdapter.addList(it.items)
+                topMoviesAdapter.addList(it.items?: emptyList())
             }
         }
 
     }
 
 
-    fun createAdapter() {
+    private fun createAdapter() {
         topMoviesAdapter = TopMoviesAdapter()
         binding.apply {
             topMoviesRecyclerView.layoutManager =
