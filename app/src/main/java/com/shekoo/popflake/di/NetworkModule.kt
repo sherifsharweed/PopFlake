@@ -1,6 +1,6 @@
 package com.shekoo.popflake.di
 
-import com.shekoo.popflake.model.Constants
+import com.shekoo.popflake.utilities.Constants
 import com.shekoo.popflake.model.api.ApiServices
 import dagger.Module
 import dagger.Provides

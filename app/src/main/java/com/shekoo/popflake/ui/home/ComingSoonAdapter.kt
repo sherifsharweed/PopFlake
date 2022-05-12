@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Items
 
-class TopMoviesAdapter() : RecyclerView.Adapter<TopMoviesAdapter.ViewHolder>() {
+class ComingSoonAdapter : RecyclerView.Adapter<ComingSoonAdapter.ViewHolder>() {
 
     private val items: MutableList<Items> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,10 +23,10 @@ class TopMoviesAdapter() : RecyclerView.Adapter<TopMoviesAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.movieTextView.text = items[position].title
-        holder.topMovieYearTextView.text = items[position].year.toString()
-        holder.topMovieRateTextView.text = items[position].imDbRating.toString()
-        Glide.with(holder.topMovieImageView.context).load(items[position].image).centerCrop()
-            .into(holder.topMovieImageView)
+        holder.comingSoonTextView.text = items[position].releaseState
+        holder.comingSoonDurationTextView.text = items[position].runtimeStr
+        Glide.with(holder.movieImageView.context).load(items[position].image).centerCrop()
+            .into(holder.movieImageView)
         holder.topMovieConstrainLayout.setOnClickListener {
             Toast.makeText(it.context, "here", Toast.LENGTH_SHORT).show()
         }
@@ -47,13 +47,13 @@ class TopMoviesAdapter() : RecyclerView.Adapter<TopMoviesAdapter.ViewHolder>() {
         val movieTextView: TextView
             get() = itemView.findViewById(R.id.movieTextView)
 
-        val topMovieYearTextView: TextView
-            get() = itemView.findViewById(R.id.topMovieyearTextView)
+        val comingSoonTextView: TextView
+            get() = itemView.findViewById(R.id.comingSoonTextView)
 
-        val topMovieRateTextView: TextView
-            get() = itemView.findViewById(R.id.topMovieRateTextView)
+        val comingSoonDurationTextView: TextView
+            get() = itemView.findViewById(R.id.comingSoonDurationTextView)
 
-        val topMovieImageView: ImageView
+        val movieImageView: ImageView
             get() = itemView.findViewById(R.id.movieImageView)
 
         val topMovieConstrainLayout: ConstraintLayout

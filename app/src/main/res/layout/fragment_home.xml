@@ -29,9 +29,12 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:gravity="center"
+
+                android:gravity="center_vertical"
+                android:paddingStart="3dp"
                 android:text="@string/topmovies"
-                android:textAlignment="center"
+                android:textAlignment="gravity"
+                android:textColor="@color/fontColor"
                 android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -51,9 +54,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:paddingStart="3dp"
                 android:text="@string/comingsoon"
-                android:textAlignment="center"
+                android:textAlignment="gravity"
+                android:textColor="@color/fontColor"
                 android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -73,9 +78,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:paddingStart="3dp"
                 android:text="@string/intheaters"
-                android:textAlignment="center"
+                android:textAlignment="gravity"
+                android:textColor="@color/fontColor"
                 android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -95,9 +102,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:paddingStart="3dp"
                 android:text="@string/boxoffice"
-                android:textAlignment="center"
+                android:textAlignment="gravity"
+                android:textColor="@color/fontColor"
                 android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView

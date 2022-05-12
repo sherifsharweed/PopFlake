@@ -1,4 +1,4 @@
-package com.shekoo.popflake.model
+package com.shekoo.popflake.utilities
 
 object Constants{
 
