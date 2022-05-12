@@ -7,18 +7,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Items
 
-class ComingSoonAdapter : RecyclerView.Adapter<ComingSoonAdapter.ViewHolder>() {
+class AdapterComingSoon : RecyclerView.Adapter<AdapterComingSoon.ViewHolder>() {
 
     private val items: MutableList<Items> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_top_movies, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_movies, parent, false)
         return ViewHolder(view)
     }
 
@@ -26,7 +25,7 @@ class ComingSoonAdapter : RecyclerView.Adapter<ComingSoonAdapter.ViewHolder>() {
         holder.movieTextView.text = items[position].title
         holder.comingSoonReleaseTextView.text = items[position].releaseState
         holder.comingSoonDurationTextView.text = items[position].runtimeStr
-        holder.rate.isVisible = false
+        holder.rate.visibility = View.GONE
         Glide.with(holder.movieImageView.context).load(items[position].image).centerCrop()
             .into(holder.movieImageView)
         holder.topMovieConstrainLayout.setOnClickListener {

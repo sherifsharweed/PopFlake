@@ -19,7 +19,6 @@ data class Items (
 	@SerializedName("imDbRatingCount") val imDbRatingCount : String?,
 	@SerializedName("metacriticRating") val metacriticRating : String?,
 	@SerializedName("genres") val genres : String?,
-
-
-
+	@SerializedName("rank") val rank : String?,
+	@SerializedName("weekend") val weekend : String?
 )

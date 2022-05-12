@@ -13,14 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shekoo.popflake.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var topMoviesAdapter: TopMoviesAdapter
-    private lateinit var comingSoonAdapter: ComingSoonAdapter
+    private lateinit var topMoviesAdapter: AdapterTopMovies
+    private lateinit var comingSoonAdapter: AdapterComingSoon
+    private lateinit var inTheaterAdapter: AdapterInTheaters
+    private lateinit var boxOfficeAdapter: AdapterBoxOffice
 
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -29,9 +31,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -47,9 +47,20 @@ class HomeFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenStarted {
-            homeViewModel.comingSoonData.collect{
-                Log.i("TAG", "onViewCreated: "+it.items)
-                comingSoonAdapter.addList(it.items?: emptyList())
+            homeViewModel.comingSoonData.collect {
+                comingSoonAdapter.addList(it.items ?: emptyList())
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.boxOfficeData.collect{
+                boxOfficeAdapter.addList(it.items?: emptyList())
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.inTheatersData.collect {
+                inTheaterAdapter.addList(it.items ?: emptyList())
             }
         }
 
@@ -61,15 +72,16 @@ class HomeFragment : Fragment() {
             }
         }
 
-
-
     }
 
-
     private fun createAdapter() {
-        topMoviesAdapter = TopMoviesAdapter()
-        comingSoonAdapter = ComingSoonAdapter()
+        topMoviesAdapter = AdapterTopMovies()
+        comingSoonAdapter = AdapterComingSoon()
+        inTheaterAdapter = AdapterInTheaters()
+        boxOfficeAdapter = AdapterBoxOffice()
+
         binding.apply {
+
             topMoviesRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             topMoviesRecyclerView.adapter = topMoviesAdapter
@@ -78,15 +90,15 @@ class HomeFragment : Fragment() {
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             comingSoonRecyclerView.adapter = comingSoonAdapter
 
-            boxOfficeRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            boxOfficeRecyclerView.adapter = topMoviesAdapter
-
-
-
             inTheatersRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            inTheatersRecyclerView.adapter = topMoviesAdapter
+            inTheatersRecyclerView.adapter = inTheaterAdapter
+
+            boxOfficeRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            boxOfficeRecyclerView.adapter = boxOfficeAdapter
+
+
         }
 
     }

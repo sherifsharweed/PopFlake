@@ -12,12 +12,12 @@ import com.bumptech.glide.Glide
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Items
 
-class TopMoviesAdapter() : RecyclerView.Adapter<TopMoviesAdapter.ViewHolder>() {
+class AdapterTopMovies() : RecyclerView.Adapter<AdapterTopMovies.ViewHolder>() {
 
     private val items: MutableList<Items> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_top_movies, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_movies, parent, false)
         return ViewHolder(view)
     }
 

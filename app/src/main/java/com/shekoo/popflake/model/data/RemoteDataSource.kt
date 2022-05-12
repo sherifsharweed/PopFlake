@@ -33,4 +33,13 @@ class RemoteDataSource @Inject constructor(private val apiServices: ApiServices)
             null
         }
     }
+
+    suspend fun getBoxOffice() : Movies?{
+        val result = apiServices.getBoxOffice()
+        return if (result.isSuccessful){
+            result.body()
+        }else{
+            null
+        }
+    }
 }
