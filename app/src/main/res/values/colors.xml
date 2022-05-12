@@ -14,4 +14,5 @@
     <color name="onPrimary">#FFFFFFFF</color>
     <color name="fontColor">#FF000000</color>
     <color name="lightFontColor">#413F42</color>
+    <color name="backGround">#F9F3EE</color>
 </resources>

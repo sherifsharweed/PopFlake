@@ -5,11 +5,14 @@
       <map>
         <entry key="..\:/Pop-flake/app/src/main/res/drawable/ic_baseline_search_30.xml" value="0.222" />
         <entry key="..\:/Pop-flake/app/src/main/res/drawable/ic_search.xml" value="0.222" />
+        <entry key="..\:/Pop-flake/app/src/main/res/drawable/rounded.xml" value="0.222" />
         <entry key="..\:/Pop-flake/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Pop-flake/app/src/main/res/layout/fragment_dashboard.xml" value="0.25416666666666665" />
         <entry key="..\:/Pop-flake/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Pop-flake/app/src/main/res/layout/fragment_notifications.xml" value="0.25416666666666665" />
         <entry key="..\:/Pop-flake/app/src/main/res/layout/fragment_search.xml" value="0.25416666666666665" />
+        <entry key="..\:/Pop-flake/app/src/main/res/layout/item_movies.xml" value="0.25416666666666665" />
+        <entry key="..\:/Pop-flake/app/src/main/res/layout/item_search.xml" value="0.25416666666666665" />
         <entry key="..\:/Pop-flake/app/src/main/res/layout/item_top_box.xml" value="0.25416666666666665" />
         <entry key="..\:/Pop-flake/app/src/main/res/layout/item_top_movies.xml" value="0.25416666666666665" />
         <entry key="..\:/Pop-flake/app/src/main/res/layout/top_movies_item.xml" value="0.25416666666666665" />
