@@ -22,12 +22,17 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
     private val _comingSoonData = MutableStateFlow<Movies>(Movies(listOf(), ""))
     val comingSoonData: Flow<Movies> = _comingSoonData
 
+    //InTheaters
+    private val _inTheatersData = MutableStateFlow<Movies>(Movies(listOf(), ""))
+    val inTheatersData: Flow<Movies> = _inTheatersData
+
     private val _topMoviesError = MutableStateFlow<String>("")
     val topMoviesError: Flow<String> = _topMoviesError
 
     init {
         getTopMovies()
         getComingSoon()
+        //getInTheaters()
     }
 
     private fun getTopMovies() {
@@ -51,6 +56,21 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
                 if (remoteDataSource.getComingSoon() != null) {
                     _comingSoonData.value = remoteDataSource.getComingSoon()!!
                 } else {
+                    _topMoviesError.value ="No Connection"
+                }
+            }catch (e: Exception){
+                _topMoviesError.value = e.message?:"Error!"
+            }
+        }
+    }
+
+    private fun getInTheaters(){
+        viewModelScope.launch {
+            try{
+                if(remoteDataSource.getInTheaters() != null){
+                    _inTheatersData.value = remoteDataSource.getInTheaters()!!
+                    Log.i("TAG", "getinthea: "+remoteDataSource.getInTheaters()!!)
+                }else{
                     _topMoviesError.value ="No Connection"
                 }
             }catch (e: Exception){

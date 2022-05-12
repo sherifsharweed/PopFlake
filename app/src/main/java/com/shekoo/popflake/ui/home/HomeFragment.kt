@@ -1,6 +1,7 @@
 package com.shekoo.popflake.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var topMoviesAdapter: TopMoviesAdapter
+    private lateinit var comingSoonAdapter: ComingSoonAdapter
+
     private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
@@ -36,32 +39,51 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         createAdapter()
-        lifecycleScope.launch {
+
+        lifecycleScope.launchWhenStarted {
             homeViewModel.topMoviesData.collect {
                 topMoviesAdapter.addList(it.items ?: emptyList())
             }
-            
-            homeViewModel.topMoviesError.collect{
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.comingSoonData.collect{
+                Log.i("TAG", "onViewCreated: "+it.items)
+                comingSoonAdapter.addList(it.items?: emptyList())
             }
         }
+
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.topMoviesError.collect {
+                if (it != "") {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
 
     }
 
 
     private fun createAdapter() {
         topMoviesAdapter = TopMoviesAdapter()
+        comingSoonAdapter = ComingSoonAdapter()
         binding.apply {
             topMoviesRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             topMoviesRecyclerView.adapter = topMoviesAdapter
 
+            comingSoonRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            comingSoonRecyclerView.adapter = comingSoonAdapter
+
             boxOfficeRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             boxOfficeRecyclerView.adapter = topMoviesAdapter
-            comingSoonRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            comingSoonRecyclerView.adapter = topMoviesAdapter
+
+
+
             inTheatersRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             inTheatersRecyclerView.adapter = topMoviesAdapter

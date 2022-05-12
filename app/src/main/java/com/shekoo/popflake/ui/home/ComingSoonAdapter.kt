@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shekoo.popflake.R
@@ -23,8 +24,9 @@ class ComingSoonAdapter : RecyclerView.Adapter<ComingSoonAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.movieTextView.text = items[position].title
-        holder.comingSoonTextView.text = items[position].releaseState
+        holder.comingSoonReleaseTextView.text = items[position].releaseState
         holder.comingSoonDurationTextView.text = items[position].runtimeStr
+        holder.rate.isVisible = false
         Glide.with(holder.movieImageView.context).load(items[position].image).centerCrop()
             .into(holder.movieImageView)
         holder.topMovieConstrainLayout.setOnClickListener {
@@ -47,11 +49,14 @@ class ComingSoonAdapter : RecyclerView.Adapter<ComingSoonAdapter.ViewHolder>() {
         val movieTextView: TextView
             get() = itemView.findViewById(R.id.movieTextView)
 
-        val comingSoonTextView: TextView
-            get() = itemView.findViewById(R.id.comingSoonTextView)
+        val comingSoonReleaseTextView: TextView
+            get() = itemView.findViewById(R.id.comingSoonReleaseTextView)
 
         val comingSoonDurationTextView: TextView
             get() = itemView.findViewById(R.id.comingSoonDurationTextView)
+
+        val rate: ImageView
+            get() = itemView.findViewById(R.id.rate)
 
         val movieImageView: ImageView
             get() = itemView.findViewById(R.id.movieImageView)
