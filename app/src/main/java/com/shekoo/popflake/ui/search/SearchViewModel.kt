@@ -3,11 +3,39 @@ package com.shekoo.popflake.ui.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.shekoo.popflake.model.data.RemoteDataSource
+import com.shekoo.popflake.model.entities.Movies
+import com.shekoo.popflake.model.entities.Search
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import java.lang.Exception
+import javax.inject.Inject
 
-class SearchViewModel : ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(private val remoteDataSource: RemoteDataSource) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    //Search
+    private val _searchData = MutableStateFlow<Search>(Search("","", emptyList(),""))
+    val searchData: Flow<Search> = _searchData
+
+    //Error
+    private val _searchError = MutableStateFlow<String>("")
+    val searchError: Flow<String> = _searchError
+
+    fun getSearch(title : String){
+        viewModelScope.launch {
+            try {
+                if (remoteDataSource.getSearch(title) != null) {
+                    _searchData.value = remoteDataSource.getSearch(title)!!
+                } else {
+                    _searchError.value ="No Connection"
+                }
+            }catch (e: Exception){
+                _searchError.value = e.message?:"Error!"
+            }
+        }
     }
-    val text: LiveData<String> = _text
 }

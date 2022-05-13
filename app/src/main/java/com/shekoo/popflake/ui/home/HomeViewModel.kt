@@ -35,10 +35,10 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
     val topMoviesError: Flow<String> = _topMoviesError
 
     init {
-        getTopMovies()
+        /*getTopMovies()
         getComingSoon()
         getInTheaters()
-        getBoxOffice()
+        getBoxOffice()*/
     }
 
     private fun getTopMovies() {
