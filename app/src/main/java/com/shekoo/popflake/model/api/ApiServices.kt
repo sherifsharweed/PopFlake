@@ -8,19 +8,19 @@ import retrofit2.http.Path
 
 interface ApiServices {
 
-    @GET("en/API/Top250Movies/k_oxjimee0")
+    @GET("en/API/Top250Movies/k_q9yz5tch")
    suspend fun getTopMovies() : Response<Movies>
 
-   @GET("en/API/ComingSoon/k_oxjimee0")
+   @GET("en/API/ComingSoon/k_q9yz5tch")
    suspend fun getComingSoon() : Response<Movies>
 
-   @GET("en/API/InTheaters/k_oxjimee0")
+   @GET("en/API/InTheaters/k_q9yz5tch")
    suspend fun getInTheaters() : Response<Movies>
 
-   @GET("en/API/BoxOffice/k_oxjimee0")
+   @GET("en/API/BoxOffice/k_q9yz5tch")
    suspend fun getBoxOffice() : Response<Movies>
 
-   @GET("en/API/SearchTitle/k_oxjimee0/{title}")
+   @GET("en/API/SearchTitle/k_q9yz5tch/{title}")
    suspend fun getSearch(@Path("title") title:String ):
            Response<Search>
 

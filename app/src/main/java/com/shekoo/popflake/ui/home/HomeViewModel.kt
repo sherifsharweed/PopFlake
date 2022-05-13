@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
         loadingData.value = false
     }
 
-    private fun getTopMovies() {
+     fun getTopMovies() {
         viewModelScope.launch {
             try {
                 if (remoteDataSource.getTopMovies() != null) {
@@ -61,7 +61,7 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
         }
     }
 
-    private fun getComingSoon() {
+     fun getComingSoon() {
         viewModelScope.launch {
             try {
                 if (remoteDataSource.getComingSoon() != null) {
@@ -75,7 +75,7 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
         }
     }
 
-    private fun getInTheaters(){
+     fun getInTheaters(){
         viewModelScope.launch {
             try{
                 if(remoteDataSource.getInTheaters() != null){
@@ -89,7 +89,7 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
         }
     }
 
-    private fun getBoxOffice(){
+     fun getBoxOffice(){
         viewModelScope.launch {
             try{
                 if(remoteDataSource.getBoxOffice() != null){

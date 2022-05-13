@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        if(!Network.hasInternet(requireContext())){
+        if (!Network.hasInternet(requireContext())) {
             Toast.makeText(requireContext(), "No Internet Connection", Toast.LENGTH_SHORT).show()
         }
         return binding.root
@@ -59,8 +59,8 @@ class HomeFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenStarted {
-            homeViewModel.boxOfficeData.collect{
-                boxOfficeAdapter.addList(it.items?: emptyList())
+            homeViewModel.boxOfficeData.collect {
+                boxOfficeAdapter.addList(it.items ?: emptyList())
             }
         }
 
@@ -98,6 +98,16 @@ class HomeFragment : Fragment() {
             boxOfficeTextView.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/chart/boxoffice"))
                 startUrlActivity(intent)
+
+            }
+            refreshLayout.setOnRefreshListener {
+                homeViewModel.apply {
+                    /*getTopMovies()
+                    getBoxOffice()
+                    getInTheaters()
+                    getComingSoon()*/
+                }
+                refreshLayout.isRefreshing = false
             }
         }
     }

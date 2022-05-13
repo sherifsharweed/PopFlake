@@ -1,129 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/topMoviesTextView"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="3dp"
-            android:gravity="center_vertical"
-            android:text="@string/topmovies"
-            android:textAlignment="gravity"
-            android:textColor="@color/fontColor"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/topMoviesRecyclerView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:minHeight="150dp"
-            app:layout_constraintBottom_toTopOf="@+id/comingSoonTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topMoviesTextView">
+            android:layout_marginBottom="60dp">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:id="@+id/topMoviesTextView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
 
-        <TextView
-            android:id="@+id/comingSoonTextView"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="center_vertical"
-            android:text="@string/comingsoon"
-            android:textAlignment="gravity"
-            android:textColor="@color/fontColor"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/comingSoonRecyclerView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topMoviesRecyclerView" />
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="3dp"
+                android:gravity="center_vertical"
+                android:text="@string/topmovies"
+                android:textAlignment="gravity"
+                android:textColor="@color/fontColor"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/comingSoonRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:minHeight="150dp"
-            app:layout_constraintBottom_toTopOf="@+id/inTheatersTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/comingSoonTextView">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topMoviesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:minHeight="150dp"
+                app:layout_constraintBottom_toTopOf="@+id/comingSoonTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/topMoviesTextView">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/inTheatersTextView"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="center_vertical"
-            android:text="@string/intheaters"
-            android:textAlignment="gravity"
-            android:textColor="@color/fontColor"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/inTheatersRecyclerView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/comingSoonRecyclerView" />
+            <TextView
+                android:id="@+id/comingSoonTextView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:gravity="center_vertical"
+                android:text="@string/comingsoon"
+                android:textAlignment="gravity"
+                android:textColor="@color/fontColor"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/comingSoonRecyclerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/topMoviesRecyclerView" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/inTheatersRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:minHeight="150dp"
-            app:layout_constraintBottom_toTopOf="@+id/boxOfficeTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inTheatersTextView">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comingSoonRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:minHeight="150dp"
+                app:layout_constraintBottom_toTopOf="@+id/inTheatersTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comingSoonTextView">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/boxOfficeTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:gravity="center_vertical"
-            android:text="@string/boxoffice"
-            android:textAlignment="gravity"
-            android:textColor="@color/fontColor"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/boxOfficeRecyclerView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inTheatersRecyclerView" />
+            <TextView
+                android:id="@+id/inTheatersTextView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:gravity="center_vertical"
+                android:text="@string/intheaters"
+                android:textAlignment="gravity"
+                android:textColor="@color/fontColor"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/inTheatersRecyclerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comingSoonRecyclerView" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/boxOfficeRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="60dp"
-            android:minHeight="150dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/boxOfficeTextView" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/inTheatersRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:minHeight="150dp"
+                app:layout_constraintBottom_toTopOf="@+id/boxOfficeTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inTheatersTextView">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.recyclerview.widget.RecyclerView>
 
-</ScrollView>
+            <TextView
+                android:id="@+id/boxOfficeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:gravity="center_vertical"
+                android:text="@string/boxoffice"
+                android:textAlignment="gravity"
+                android:textColor="@color/fontColor"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/boxOfficeRecyclerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inTheatersRecyclerView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/boxOfficeRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="60dp"
+                android:minHeight="150dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/boxOfficeTextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

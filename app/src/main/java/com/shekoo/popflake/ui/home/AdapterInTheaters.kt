@@ -14,7 +14,8 @@ import com.bumptech.glide.Glide
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Items
 
-class AdapterInTheaters(var startUrlIntent: (Intent) -> Unit) : RecyclerView.Adapter<AdapterInTheaters.ViewHolder>() {
+class AdapterInTheaters(var startUrlIntent: (Intent) -> Unit) :
+    RecyclerView.Adapter<AdapterInTheaters.ViewHolder>() {
 
     private val items: MutableList<Items> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
