@@ -20,7 +20,7 @@ import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class SearchAdapter constructor(private val activity: MainActivity) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class SearchAdapter (var  startUrlIntent : (Intent) -> Unit) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
 
     private val items: MutableList<Results> = mutableListOf()
@@ -40,7 +40,7 @@ class SearchAdapter constructor(private val activity: MainActivity) : RecyclerVi
         holder.searchConstrainLayout.setOnClickListener {
             val url = items[position].id
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/title/$url"))
-            activity.startActivity(intent)
+            startUrlIntent(intent)
         }
 
     }

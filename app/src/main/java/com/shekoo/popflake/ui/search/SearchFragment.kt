@@ -2,6 +2,7 @@ package com.shekoo.popflake.ui.search
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -73,13 +74,17 @@ class SearchFragment : Fragment() {
 
 
         private fun createAdapter() {
-            searchAdapter = SearchAdapter(requireActivity() as MainActivity)
+            searchAdapter = SearchAdapter(this::startUrlActivity)
             binding.apply {
                 searchRecyclerView.layoutManager =
                     LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                 searchRecyclerView.adapter = searchAdapter
             }
         }
+
+    private fun startUrlActivity(intent : Intent){
+        startActivity(intent)
+    }
 
     private fun showLoading(){
         dialog = ProgressDialog.show(requireContext(), "", "Loading. Please wait...", true);
