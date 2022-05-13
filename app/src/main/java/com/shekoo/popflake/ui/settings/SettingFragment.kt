@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -42,6 +43,27 @@ class SettingFragment : Fragment() {
             editor.putBoolean(DARK_MODE,boolean)
             editor.apply()
             checkDarkMode()
+        }
+        binding.apply {
+            submitButton.setOnClickListener {
+                when {
+                    nameTextView.text.isNullOrEmpty() -> {
+                        Toast.makeText(requireContext(), "Insert Name", Toast.LENGTH_SHORT).show()
+                    }
+                    phoneTextView.text.isNullOrEmpty() -> {
+                        Toast.makeText(requireContext(), "Insert Phone", Toast.LENGTH_SHORT).show()
+                    }
+                    complainTextView.text.isNullOrEmpty() -> {
+                        Toast.makeText(requireContext(), "Insert Complaint Body", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+                        Toast.makeText(requireContext(), "Complaint Sent Successfully", Toast.LENGTH_SHORT).show()
+                        nameTextView.text.clear()
+                        phoneTextView.text.clear()
+                        complainTextView.text.clear()
+                    }
+                }
+            }
         }
 
     }

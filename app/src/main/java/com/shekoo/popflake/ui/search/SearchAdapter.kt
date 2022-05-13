@@ -7,20 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.shekoo.popflake.MainActivity
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Results
-import dagger.hilt.android.scopes.ActivityRetainedScoped
-import dagger.hilt.android.scopes.ActivityScoped
-import dagger.hilt.android.scopes.FragmentScoped
-import javax.inject.Inject
-import javax.inject.Singleton
 
-class SearchAdapter (var  startUrlIntent : (Intent) -> Unit) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+
+class SearchAdapter(var startUrlIntent: (Intent) -> Unit) :
+    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
 
     private val items: MutableList<Results> = mutableListOf()

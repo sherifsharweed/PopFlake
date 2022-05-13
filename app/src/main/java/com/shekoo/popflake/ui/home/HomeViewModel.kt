@@ -34,18 +34,23 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
     private val _topMoviesError = MutableStateFlow<String>("")
     val topMoviesError: Flow<String> = _topMoviesError
 
+    //Loading
+    var loadingData = MutableStateFlow<Boolean>(false)
+
     init {
-        /*getTopMovies()
+        getTopMovies()
         getComingSoon()
         getInTheaters()
-        getBoxOffice()*/
+        getBoxOffice()
     }
 
     private fun getTopMovies() {
         viewModelScope.launch {
             try {
                 if (remoteDataSource.getTopMovies() != null) {
+                    loadingData.value = true
                     _topMoviesData.value = remoteDataSource.getTopMovies()!!
+                    loadingData.value = false
                 } else {
                     _topMoviesError.value ="No Connection"
                 }

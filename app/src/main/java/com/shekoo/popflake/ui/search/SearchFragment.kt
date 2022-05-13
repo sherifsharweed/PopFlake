@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,7 +33,7 @@ class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private lateinit var searchAdapter: SearchAdapter
     private val searchViewModel: SearchViewModel by viewModels()
-    private  var dialog : AlertDialog? = null
+    private var dialog: AlertDialog? = null
 
 
     override fun onCreateView(
@@ -66,34 +67,39 @@ class SearchFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            searchViewModel.loadingData.collectLatest{
-                if(it) showLoading() else hideLoading()
+            searchViewModel.loadingData.collectLatest {
+                if (it) showLoading() else hideLoading()
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            searchViewModel.searchError.collect {
+                if (it != "") {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
-
-        private fun createAdapter() {
-            searchAdapter = SearchAdapter(this::startUrlActivity)
-            binding.apply {
-                searchRecyclerView.layoutManager =
-                    LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-                searchRecyclerView.adapter = searchAdapter
-            }
+    private fun createAdapter() {
+        searchAdapter = SearchAdapter(this::startUrlActivity)
+        binding.apply {
+            searchRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            searchRecyclerView.adapter = searchAdapter
         }
+    }
 
-    private fun startUrlActivity(intent : Intent){
+    private fun startUrlActivity(intent: Intent) {
         startActivity(intent)
     }
 
-    private fun showLoading(){
+    private fun showLoading() {
         dialog = ProgressDialog.show(requireContext(), "", "Loading. Please wait...", true);
-
     }
 
-    private fun hideLoading(){
+    private fun hideLoading() {
         dialog?.dismiss()
-
     }
 
-    }
+}

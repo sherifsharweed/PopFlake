@@ -74,7 +74,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="3dp"
                     android:layout_weight="1"
-                    android:textColor="@color/lightFontColor"
+                    android:textColor="@color/fontColor"
                     tools:text="TextView" />
             </LinearLayout>
 
