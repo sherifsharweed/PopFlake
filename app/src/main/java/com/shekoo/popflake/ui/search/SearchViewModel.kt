@@ -1,5 +1,6 @@
 package com.shekoo.popflake.ui.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,11 +26,17 @@ class SearchViewModel @Inject constructor(private val remoteDataSource: RemoteDa
     private val _searchError = MutableStateFlow<String>("")
     val searchError: Flow<String> = _searchError
 
+    //Loading
+    var loadingData = MutableStateFlow<Boolean>(false)
+
+
     fun getSearch(title : String){
         viewModelScope.launch {
             try {
                 if (remoteDataSource.getSearch(title) != null) {
+                    loadingData.value = true
                     _searchData.value = remoteDataSource.getSearch(title)!!
+                    loadingData.value = false
                 } else {
                     _searchError.value ="No Connection"
                 }

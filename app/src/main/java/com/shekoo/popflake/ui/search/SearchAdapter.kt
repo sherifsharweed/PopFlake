@@ -1,5 +1,7 @@
 package com.shekoo.popflake.ui.search
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +11,13 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.shekoo.popflake.MainActivity
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Results
+import dagger.hilt.android.scopes.FragmentScoped
+import javax.inject.Inject
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class SearchAdapter (private val activity: MainActivity): RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     private val items: MutableList<Results> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
@@ -28,7 +33,9 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
             .into(holder.searchImageView)
 
         holder.searchConstrainLayout.setOnClickListener {
-            Toast.makeText(it.context, "here", Toast.LENGTH_SHORT).show()
+            val url = items[position].id
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/title/$url"))
+            activity.startActivity(intent)
         }
 
     }
@@ -38,6 +45,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     }
 
     fun addList(listOfItems: List<Results>) {
+        items.clear()
         items.addAll(listOfItems)
         notifyDataSetChanged()
     }

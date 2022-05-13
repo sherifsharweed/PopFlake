@@ -1,5 +1,7 @@
 package com.shekoo.popflake.ui.search
 
+import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,11 +15,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.shekoo.popflake.MainActivity
 import com.shekoo.popflake.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -26,6 +30,7 @@ class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private lateinit var searchAdapter: SearchAdapter
     private val searchViewModel: SearchViewModel by viewModels()
+    private  var dialog : AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,20 +57,36 @@ class SearchFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            searchViewModel.searchData.collect {
+            searchViewModel.searchData.collectLatest {
                 searchAdapter.addList(it.results ?: emptyList())
+            }
+        }
+
+        lifecycleScope.launch {
+            searchViewModel.loadingData.collectLatest{
+                if(it) showLoading() else hideLoading()
             }
         }
     }
 
 
         private fun createAdapter() {
-            searchAdapter = SearchAdapter()
+            searchAdapter = SearchAdapter(requireActivity() as MainActivity)
             binding.apply {
                 searchRecyclerView.layoutManager =
                     LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                 searchRecyclerView.adapter = searchAdapter
             }
         }
+
+    private fun showLoading(){
+        dialog = ProgressDialog.show(requireContext(), "", "Loading. Please wait...", true);
+
+    }
+
+    private fun hideLoading(){
+        dialog?.dismiss()
+
+    }
 
     }

@@ -22,8 +22,12 @@ class SettingFragment : Fragment() {
     ): View {
 
         binding = FragmentSettingBinding.inflate(inflater, container, false)
-
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
 }
