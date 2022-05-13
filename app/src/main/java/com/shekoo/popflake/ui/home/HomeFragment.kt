@@ -1,5 +1,7 @@
 package com.shekoo.popflake.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shekoo.popflake.databinding.FragmentHomeBinding
+import com.shekoo.popflake.utilities.Network
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -32,6 +35,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        if(!Network.hasInternet(requireContext())){
+            Toast.makeText(requireContext(), "No Internet Connection", Toast.LENGTH_SHORT).show()
+        }
         return binding.root
     }
 
@@ -74,11 +80,33 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.apply {
+            topMoviesTextView.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/chart/top"))
+                startUrlActivity(intent)
+            }
+            comingSoonTextView.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/movies-coming-soon"))
+                startUrlActivity(intent)
+            }
+            inTheatersTextView.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/movies-in-theaters"))
+                startUrlActivity(intent)
+            }
+            boxOfficeTextView.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/chart/boxoffice"))
+                startUrlActivity(intent)
+            }
+        }
+    }
+
     private fun createAdapter() {
-        topMoviesAdapter = AdapterTopMovies()
-        comingSoonAdapter = AdapterComingSoon()
-        inTheaterAdapter = AdapterInTheaters()
-        boxOfficeAdapter = AdapterBoxOffice()
+        topMoviesAdapter = AdapterTopMovies(this::startUrlActivity)
+        comingSoonAdapter = AdapterComingSoon(this::startUrlActivity)
+        inTheaterAdapter = AdapterInTheaters(this::startUrlActivity)
+        boxOfficeAdapter = AdapterBoxOffice(this::startUrlActivity)
 
         binding.apply {
 
@@ -97,9 +125,11 @@ class HomeFragment : Fragment() {
             boxOfficeRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             boxOfficeRecyclerView.adapter = boxOfficeAdapter
-
-
         }
 
+    }
+
+    private fun startUrlActivity(intent: Intent) {
+        startActivity(intent)
     }
 }

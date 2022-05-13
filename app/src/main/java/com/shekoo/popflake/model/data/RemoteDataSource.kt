@@ -44,12 +44,12 @@ class RemoteDataSource @Inject constructor(private val apiServices: ApiServices)
         }
     }
 
-    suspend fun getSearch(title : String) : Search?{
+    suspend fun getSearch(title : String) : Search{
         val result = apiServices.getSearch(title)
         return if (result.isSuccessful){
-            result.body()
+            result.body()?:Search("","", emptyList(),"Error")
         }else{
-            null
+            Search("","", emptyList(),"Error")
         }
     }
 }

@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
+            android:minHeight="150dp"
             app:layout_constraintBottom_toTopOf="@+id/comingSoonTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/topMoviesTextView">
@@ -60,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
+            android:minHeight="150dp"
             app:layout_constraintBottom_toTopOf="@+id/inTheatersTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/comingSoonTextView">
@@ -88,6 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
+            android:minHeight="150dp"
             app:layout_constraintBottom_toTopOf="@+id/boxOfficeTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inTheatersTextView">
@@ -116,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="60dp"
+            android:minHeight="150dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/boxOfficeTextView" />

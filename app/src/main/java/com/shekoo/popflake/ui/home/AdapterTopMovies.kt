@@ -1,5 +1,7 @@
 package com.shekoo.popflake.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Items
 
-class AdapterTopMovies() : RecyclerView.Adapter<AdapterTopMovies.ViewHolder>() {
+class AdapterTopMovies (var startUrlIntent: (Intent) -> Unit) : RecyclerView.Adapter<AdapterTopMovies.ViewHolder>() {
 
     private val items: MutableList<Items> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,8 +29,12 @@ class AdapterTopMovies() : RecyclerView.Adapter<AdapterTopMovies.ViewHolder>() {
         holder.topMovieRateTextView.text = items[position].imDbRating.toString()
         Glide.with(holder.topMovieImageView.context).load(items[position].image).centerCrop()
             .into(holder.topMovieImageView)
+
         holder.topMovieConstrainLayout.setOnClickListener {
-            Toast.makeText(it.context, "here", Toast.LENGTH_SHORT).show()
+            //val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/chart/top"))
+            val url = items[position].id
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/title/$url"))
+            startUrlIntent(intent)
         }
 
     }

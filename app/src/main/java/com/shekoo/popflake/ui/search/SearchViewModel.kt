@@ -33,15 +33,12 @@ class SearchViewModel @Inject constructor(private val remoteDataSource: RemoteDa
     fun getSearch(title : String){
         viewModelScope.launch {
             try {
-                if (remoteDataSource.getSearch(title) != null) {
-                    loadingData.value = true
-                    _searchData.value = remoteDataSource.getSearch(title)!!
-                    loadingData.value = false
-                } else {
-                    _searchError.value ="No Connection"
-                }
+                loadingData.value = true
+                _searchData.value = remoteDataSource.getSearch(title)
+                loadingData.value = false
             }catch (e: Exception){
-                _searchError.value = e.message?:"Error!"
+                _searchError.value = e.message?:"Error"
+                loadingData.value = false
             }
         }
     }
