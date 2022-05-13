@@ -14,10 +14,15 @@ import com.bumptech.glide.Glide
 import com.shekoo.popflake.MainActivity
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Results
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class SearchAdapter (private val activity: MainActivity): RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class SearchAdapter constructor(private val activity: MainActivity) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+
+
     private val items: MutableList<Results> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =

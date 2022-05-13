@@ -7,5 +7,6 @@
     <string name="intheaters">In Theaters</string>
     <string name="comingsoon">Coming Soon</string>
     <string name="boxoffice">Top Box Office</string>
-<!-- TODO: Remove or change this placeholder text -->
+    <string name="darkmode">Dark Mode</string>
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>
