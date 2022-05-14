@@ -1,7 +1,7 @@
 # PopFlake
-<img src="pic/Capture1.PNG" alt="1" height="300"/> <img src="pic/Capture2.PNG" alt="1" height="300"/>
-<img src="pic/Capture3.PNG" alt="1" height="300"/> <img src="pic/Capture4.PNG" alt="1" height="300"/>
-<img src="pic/Capture5.PNG" alt="1" height="300"/> <img src="pic/Capture6.PNG" alt="1" height="300"/>
+<img src="pic/1.PNG" alt="1" height="300"/> <img src="pic/2.PNG" alt="1" height="300"/>
+<img src="pic/3.PNG" alt="1" height="300"/> <img src="pic/4.PNG" alt="1" height="300"/>
+<img src="pic/5.PNG" alt="1" height="300"/> <img src="pic/6.PNG" alt="1" height="300"/>
 
 
 An application for movies :
