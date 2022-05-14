@@ -35,6 +35,7 @@ class SearchViewModel @Inject constructor(private val remoteDataSource: RemoteDa
             try {
                 loadingData.value = true
                 _searchData.value = remoteDataSource.getSearch(title)
+                _searchError.value = remoteDataSource.getSearch(title).errorMessage?:""
                 loadingData.value = false
             }catch (e: Exception){
                 _searchError.value = e.message?:"Error"

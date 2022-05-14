@@ -10,4 +10,8 @@ object Constants{
     const val FILE_NAME = "FILTER_SHARED_PREFERENCE"
     const val DARK_MODE = "DARK_MODE"
 
+    //TAG
+    const val TAG = "TAG"
+
+
 }

@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Items
 
-class AdapterBoxOffice(var startUrlIntent: (Intent) -> Unit) : RecyclerView.Adapter<AdapterBoxOffice.ViewHolder>() {
+class AdapterBoxOffice() : RecyclerView.Adapter<AdapterBoxOffice.ViewHolder>() {
     private val items: MutableList<Items> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
@@ -33,7 +33,7 @@ class AdapterBoxOffice(var startUrlIntent: (Intent) -> Unit) : RecyclerView.Adap
             //val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/chart/boxoffice"))
             val url = items[position].id
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/title/$url"))
-            startUrlIntent(intent)
+            holder.boxOfficeImageView.context.startActivity(intent)
         }
 
     }

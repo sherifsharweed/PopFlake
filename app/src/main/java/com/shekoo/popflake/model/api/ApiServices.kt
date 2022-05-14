@@ -2,6 +2,7 @@ package com.shekoo.popflake.model.api
 
 import com.shekoo.popflake.model.entities.Movies
 import com.shekoo.popflake.model.entities.Search
+import com.shekoo.popflake.model.entities.Trailer
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -21,7 +22,9 @@ interface ApiServices {
    suspend fun getBoxOffice() : Response<Movies>
 
    @GET("en/API/SearchTitle/k_q9yz5tch/{title}")
-   suspend fun getSearch(@Path("title") title:String ):
-           Response<Search>
+   suspend fun getSearch(@Path("title") title:String ): Response<Search>
+
+   @GET("en/API/Trailer/k_q9yz5tch/{id}")
+   suspend fun getTrailer(@Path("id") id:String) : Response<Trailer>
 
 }

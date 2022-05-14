@@ -14,8 +14,7 @@ import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Results
 
 
-class SearchAdapter(var startUrlIntent: (Intent) -> Unit) :
-    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
 
     private val items: MutableList<Results> = mutableListOf()
@@ -35,7 +34,7 @@ class SearchAdapter(var startUrlIntent: (Intent) -> Unit) :
         holder.searchConstrainLayout.setOnClickListener {
             val url = items[position].id
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/title/$url"))
-            startUrlIntent(intent)
+            holder.searchConstrainLayout.context.startActivity(intent)
         }
 
     }

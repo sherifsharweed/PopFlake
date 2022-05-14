@@ -4,6 +4,8 @@ import android.util.Log
 import com.shekoo.popflake.model.api.ApiServices
 import com.shekoo.popflake.model.entities.Movies
 import com.shekoo.popflake.model.entities.Search
+import com.shekoo.popflake.model.entities.Trailer
+import com.shekoo.popflake.utilities.Constants
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val apiServices: ApiServices) {
@@ -48,8 +50,14 @@ class RemoteDataSource @Inject constructor(private val apiServices: ApiServices)
         val result = apiServices.getSearch(title)
         return if (result.isSuccessful){
             result.body()?:Search("","", emptyList(),"Error")
-        }else{
-            Search("","", emptyList(),"Error")
-        }
+        }else Search("","", emptyList(),"Error")
+
+    }
+
+    suspend fun getTrailer(id : String) : Trailer{
+        val result = apiServices.getTrailer(id)
+        return if (result.isSuccessful){
+            result.body()?:Trailer("","","","","Error")
+        }else Trailer("","","","","Error")
     }
 }

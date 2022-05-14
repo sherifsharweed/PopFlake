@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.shekoo.popflake.model.entities.Movies
 import com.shekoo.popflake.model.data.RemoteDataSource
+import com.shekoo.popflake.model.entities.Trailer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,33 +30,38 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
     //BoxOffice
     private val _boxOfficeData = MutableStateFlow<Movies>(Movies(listOf(), ""))
     val boxOfficeData: Flow<Movies> = _boxOfficeData
+    
+    //Trailer
+    private val _trailerData = MutableStateFlow<Trailer>(Trailer("","","","",""))
+    val trailerData: Flow<Trailer> = _trailerData
 
     //Error
-    private val _topMoviesError = MutableStateFlow<String>("")
-    val topMoviesError: Flow<String> = _topMoviesError
+    private val _error = MutableStateFlow<String>("")
+    val error: Flow<String> = _error
 
     //Loading
     var loadingData = MutableStateFlow<Boolean>(false)
 
     init {
-        loadingData.value = true
-        /*getTopMovies()
+        getTopMovies()
         getComingSoon()
         getInTheaters()
-        getBoxOffice()*/
-        loadingData.value = false
+        getBoxOffice()
+
     }
 
      fun getTopMovies() {
         viewModelScope.launch {
             try {
                 if (remoteDataSource.getTopMovies() != null) {
+                    loadingData.value = true
                     _topMoviesData.value = remoteDataSource.getTopMovies()!!
+                    loadingData.value = false
                 } else {
-                    _topMoviesError.value ="No Connection"
+                    _error.value ="No Connection"
                 }
             }catch (e: Exception){
-                _topMoviesError.value = e.message?:"Error!"
+                _error.value = e.message?:"Error!"
             }
 
         }
@@ -66,11 +72,12 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
             try {
                 if (remoteDataSource.getComingSoon() != null) {
                     _comingSoonData.value = remoteDataSource.getComingSoon()!!
+                    Log.i("TAG", "getComingSoon: "+remoteDataSource.getComingSoon()!!)
                 } else {
-                    _topMoviesError.value ="No Connection"
+                    _error.value ="No Connection"
                 }
             }catch (e: Exception){
-                _topMoviesError.value = e.message?:"Error!"
+                _error.value = e.message?:"Error!"
             }
         }
     }
@@ -81,10 +88,10 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
                 if(remoteDataSource.getInTheaters() != null){
                     _inTheatersData.value = remoteDataSource.getInTheaters()!!
                 }else{
-                    _topMoviesError.value ="No Connection"
+                    _error.value ="No Connection"
                 }
             }catch (e: Exception){
-                _topMoviesError.value = e.message?:"Error!"
+                _error.value = e.message?:"Error!"
             }
         }
     }
@@ -95,10 +102,23 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
                 if(remoteDataSource.getBoxOffice() != null){
                     _boxOfficeData.value = remoteDataSource.getBoxOffice()!!
                 }else{
-                    _topMoviesError.value ="No Connection"
+                    _error.value ="No Connection"
                 }
             }catch (e: Exception){
-                _topMoviesError.value = e.message?:"Error!"
+                _error.value = e.message?:"Error!"
+            }
+        }
+    }
+    
+    fun getTrailer(id : String){
+        viewModelScope.launch {
+            try {
+                //loadingData.value = true
+                _trailerData.value = remoteDataSource.getTrailer(id)
+                //loadingData.value = false
+            }catch (e: Exception){
+                _error.value = e.message?:"Error"
+                loadingData.value = false
             }
         }
     }

@@ -16,20 +16,34 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="60dp">
 
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/imageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:minHeight="200dp"
+                android:scrollIndicators="none"
+                app:iss_auto_cycle="true"
+                app:iss_delay="0"
+                app:iss_period="2000"
+                app:iss_selected_dot="@drawable/dot_slide"
+                app:iss_unselected_dot="@drawable/dot_slide"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/topMoviesTextView"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-
                 android:layout_marginStart="6dp"
-                android:layout_marginTop="3dp"
                 android:gravity="center_vertical"
                 android:text="@string/topmovies"
                 android:textAlignment="gravity"
                 android:textColor="@color/fontColor"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toTopOf="@id/topMoviesRecyclerView"
+                app:layout_constraintTop_toBottomOf="@id/imageSlider"
+                tools:layout_editor_absoluteY="3dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/topMoviesRecyclerView"

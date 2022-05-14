@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.shekoo.popflake.R
 import com.shekoo.popflake.model.entities.Items
 
-class AdapterTopMovies (var startUrlIntent: (Intent) -> Unit) : RecyclerView.Adapter<AdapterTopMovies.ViewHolder>() {
+class AdapterTopMovies : RecyclerView.Adapter<AdapterTopMovies.ViewHolder>() {
 
     private val items: MutableList<Items> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,7 +34,7 @@ class AdapterTopMovies (var startUrlIntent: (Intent) -> Unit) : RecyclerView.Ada
             //val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/chart/top"))
             val url = items[position].id
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/title/$url"))
-            startUrlIntent(intent)
+            holder.topMovieImageView.context.startActivity(intent)
         }
 
     }

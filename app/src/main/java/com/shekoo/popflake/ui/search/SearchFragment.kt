@@ -76,17 +76,17 @@ class SearchFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launchWhenStarted {
+        /*lifecycleScope.launchWhenStarted {
             searchViewModel.searchError.collect {
                 if (it != "") {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 }
             }
-        }
+        }*/
     }
 
     private fun createAdapter() {
-        searchAdapter = SearchAdapter(this::startUrlActivity)
+        searchAdapter = SearchAdapter()
         binding.apply {
             searchRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -94,9 +94,6 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun startUrlActivity(intent: Intent) {
-        startActivity(intent)
-    }
 
     private fun showLoading() {
         dialog = ProgressDialog.show(requireContext(), "", "Loading. Please wait...", true);
