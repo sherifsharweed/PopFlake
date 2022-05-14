@@ -7,12 +7,9 @@ import com.shekoo.popflake.model.data.RemoteDataSource
 import com.shekoo.popflake.model.entities.Items
 import com.shekoo.popflake.model.entities.Trailer
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.invoke
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -49,10 +46,10 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
     var loadingData = MutableStateFlow<Boolean>(false)
 
     init {
-        /*getTopMovies()
+        getTopMovies()
         getComingSoon()
         getInTheaters()
-        getBoxOffice()*/
+        getBoxOffice()
 
     }
 
@@ -74,7 +71,6 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
         viewModelScope.launch {
             try {
                 _comingSoonData.value = remoteDataSource.getComingSoon()
-
             } catch (e: Exception) {
                 _error.value = e.message ?: "Error!"
             }
@@ -86,23 +82,23 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
             try {
                 _trailerData.value.clear()
                 _inTheatersData.value = remoteDataSource.getInTheaters()
-                sendIdForTrailer(_inTheatersData.value.items!!)
+                val process = async { sendIdForTrailer(_inTheatersData.value.items!!) }
+                _trailerData.value = process.await()
             } catch (e: Exception) {
                 _error.value = e.message ?: "Error!"
             }
         }
     }
 
-    private fun sendIdForTrailer(items: List<Items>) {
+    private suspend fun sendIdForTrailer(items: List<Items>): MutableList<Trailer> {
         val list = mutableListOf<Trailer>()
-        runBlocking  {
-        for(i in items){
-                val trailer = remoteDataSource.getTrailer(i.id?:"")
+        for (i in items) {
+            i.id?.let {
+                val trailer = remoteDataSource.getTrailer(it)
                 list.add(trailer)
             }
         }
-        _trailerData.value = list
-
+        return list
     }
 
     fun getBoxOffice() {

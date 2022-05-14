@@ -39,8 +39,8 @@
 
             <ImageView
                 android:id="@+id/movieImageView"
-                android:layout_width="190dp"
-                android:layout_height="220dp"
+                android:layout_width="180dp"
+                android:layout_height="230dp"
                 android:background="@color/onPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -79,9 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:textColor="@color/fontColor"
-                app:layout_constraintBottom_toBottomOf="@+id/rate"
+                app:layout_constraintBottom_toBottomOf="@id/topMovieyearTextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/rate"
                 tools:text="TextView"
                 tools:visibility="invisible" />
 
@@ -90,17 +89,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/fontColor"
-                app:layout_constraintBottom_toBottomOf="@+id/topMovieyearTextView"
+                app:layout_constraintBottom_toBottomOf="@id/comingSoonReleaseTextView"
                 app:layout_constraintEnd_toEndOf="@+id/topMovieRateTextView"
-                app:layout_constraintTop_toTopOf="@+id/topMovieyearTextView"
-                tools:text="TextView"
-                tools:visibility="invisible" />
+                tools:text="TextView" />
 
             <TextView
                 android:id="@+id/comingSoonReleaseTextView"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="11dp"
+                android:layout_marginBottom="9dp"
                 android:textColor="@color/fontColor"
                 app:layout_constraintTop_toBottomOf="@id/movieTextView"
                 app:layout_constraintBottom_toBottomOf="parent"

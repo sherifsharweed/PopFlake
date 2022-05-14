@@ -81,8 +81,8 @@ class HomeFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launch {
-            homeViewModel.trailerData.collect {
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.trailerData.collectLatest {
                 listOfImageForSlider.clear()
                 for (i in it) {
                     listOfImageForSlider.add(ImageSlider(i.imDbId, i.title, i.thumbnailUrl, i.link))
@@ -144,15 +144,7 @@ class HomeFragment : Fragment() {
                 refreshLayout.isRefreshing = false
             }
 
-            binding.imageSlider.setItemClickListener(object : ItemClickListener {
-                override fun onItemSelected(position: Int) {
-                    //Toast.makeText(requireContext(), listOfImageForSlider[position].title, Toast.LENGTH_SHORT).show()
-                    val url = listOfImageForSlider[position].videoUrl
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    requireActivity().startActivity(intent)
-                }
 
-            })
         }
     }
 
@@ -185,7 +177,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun addSlider() {
-        Log.i(TAG, "addSlider: size of array" + listOfImageForSlider.size)
         val imageList = ArrayList<SlideModel>()
         for (i in listOfImageForSlider) {
             if (i.id != "") {
@@ -199,6 +190,14 @@ class HomeFragment : Fragment() {
             }
         }
         binding.imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+        binding.imageSlider.setItemClickListener(object : ItemClickListener {
+            override fun onItemSelected(position: Int) {
+                val url = listOfImageForSlider[position].videoUrl
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                requireActivity().startActivity(intent)
+            }
+
+        })
 
     }
 
