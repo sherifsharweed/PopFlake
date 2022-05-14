@@ -5,7 +5,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +19,8 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.shekoo.popflake.databinding.FragmentHomeBinding
 import com.shekoo.popflake.model.entities.ImageSlider
-import com.shekoo.popflake.utilities.Constants.TAG
 import com.shekoo.popflake.utilities.Network
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -136,10 +132,10 @@ class HomeFragment : Fragment() {
             }
             refreshLayout.setOnRefreshListener {
                 homeViewModel.apply {
-                    /*getTopMovies()
+                    getTopMovies()
                     getBoxOffice()
                     getInTheaters()
-                    getComingSoon()*/
+                    getComingSoon()
                 }
                 refreshLayout.isRefreshing = false
             }

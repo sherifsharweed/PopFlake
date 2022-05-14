@@ -1,16 +1,16 @@
 package com.shekoo.popflake.ui.home
 
-import android.util.Log
-import androidx.lifecycle.*
-import com.shekoo.popflake.model.entities.Movies
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.shekoo.popflake.model.data.RemoteDataSource
 import com.shekoo.popflake.model.entities.Items
+import com.shekoo.popflake.model.entities.Movies
 import com.shekoo.popflake.model.entities.Trailer
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.lang.Exception
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,7 +36,6 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
     //Trailer
     private var _trailerData = MutableStateFlow<MutableList<Trailer>>(mutableListOf<Trailer>())
     var trailerData: Flow<MutableList<Trailer>> = _trailerData
-
 
     //Error
     private val _error = MutableStateFlow<String>("")
