@@ -12,11 +12,13 @@ An application for movies :
 
 3- User can select any item in slider header and it will open a web for trailer.
 
-3- User can search for any movies with title .
+4- User can swipe to refresh.
 
-4- User can select mode between light or dark .
+5- User can search for any movies with title .
 
-5- User can send complaint.
+6- User can select mode between light or dark .
+
+7- User can send complaint.
 
 # Application architecture and structure
 
