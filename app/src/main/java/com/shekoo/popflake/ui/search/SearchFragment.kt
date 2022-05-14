@@ -76,13 +76,11 @@ class SearchFragment : Fragment() {
             }
         }
 
-        /*lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
             searchViewModel.searchError.collect {
-                if (it != "") {
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                }
+                if (it != "") Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
-        }*/
+        }
     }
 
     private fun createAdapter() {

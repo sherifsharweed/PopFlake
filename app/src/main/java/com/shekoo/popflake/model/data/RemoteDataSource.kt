@@ -10,40 +10,32 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val apiServices: ApiServices) {
 
-    suspend fun getTopMovies(): Movies? {
+    suspend fun getTopMovies(): Movies {
         val res = apiServices.getTopMovies()
         return if (res.isSuccessful) {
-            res.body()!!
-        } else {
-            null
-        }
+            res.body()?: Movies(emptyList(),"Error")
+        } else Movies(emptyList(),"Error")
     }
 
-    suspend fun getComingSoon(): Movies? {
+    suspend fun getComingSoon(): Movies {
         val result = apiServices.getComingSoon()
         return if (result.isSuccessful) {
-            result.body()!!
-        } else {
-            null
-        }
+            result.body()?: Movies(emptyList(),"Error")
+        } else Movies(emptyList(),"Error")
     }
 
-    suspend fun getInTheaters() : Movies?{
+    suspend fun getInTheaters() : Movies{
         val result = apiServices.getInTheaters()
         return if (result.isSuccessful){
-            result.body()
-        }else{
-            null
-        }
+            result.body()?: Movies(emptyList(),"Error")
+        }else Movies(emptyList(),"Error")
     }
 
-    suspend fun getBoxOffice() : Movies?{
+    suspend fun getBoxOffice() : Movies{
         val result = apiServices.getBoxOffice()
         return if (result.isSuccessful){
-            result.body()
-        }else{
-            null
-        }
+            result.body()?: Movies(emptyList(),"Error")
+        }else Movies(emptyList(),"Error")
     }
 
     suspend fun getSearch(title : String) : Search{

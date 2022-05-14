@@ -19,14 +19,14 @@
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:minHeight="200dp"
+                android:layout_height="180dp"
+                android:minHeight="150dp"
                 android:scrollIndicators="none"
                 app:iss_auto_cycle="true"
                 app:iss_delay="0"
                 app:iss_period="2000"
-                app:iss_selected_dot="@drawable/dot_slide"
-                app:iss_unselected_dot="@drawable/dot_slide"
+                app:iss_selected_dot="@drawable/default_selected_dot"
+                app:iss_unselected_dot="@drawable/default_unselected_dot"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

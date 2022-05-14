@@ -4,16 +4,21 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.shekoo.popflake.model.entities.Movies
 import com.shekoo.popflake.model.data.RemoteDataSource
+import com.shekoo.popflake.model.entities.Items
 import com.shekoo.popflake.model.entities.Trailer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteDataSource) : ViewModel() {
+class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteDataSource) :
+    ViewModel() {
 
     //Top Movies
     private val _topMoviesData = MutableStateFlow<Movies>(Movies(listOf(), ""))
@@ -30,10 +35,11 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
     //BoxOffice
     private val _boxOfficeData = MutableStateFlow<Movies>(Movies(listOf(), ""))
     val boxOfficeData: Flow<Movies> = _boxOfficeData
-    
+
     //Trailer
-    private val _trailerData = MutableStateFlow<Trailer>(Trailer("","","","",""))
-    val trailerData: Flow<Trailer> = _trailerData
+    private var _trailerData = MutableStateFlow<MutableList<Trailer>>(mutableListOf<Trailer>())
+    var trailerData: Flow<MutableList<Trailer>> = _trailerData
+
 
     //Error
     private val _error = MutableStateFlow<String>("")
@@ -43,83 +49,71 @@ class HomeViewModel @Inject constructor(private val remoteDataSource: RemoteData
     var loadingData = MutableStateFlow<Boolean>(false)
 
     init {
-        getTopMovies()
+        /*getTopMovies()
         getComingSoon()
         getInTheaters()
-        getBoxOffice()
+        getBoxOffice()*/
 
     }
 
-     fun getTopMovies() {
+    fun getTopMovies() {
         viewModelScope.launch {
             try {
-                if (remoteDataSource.getTopMovies() != null) {
-                    loadingData.value = true
-                    _topMoviesData.value = remoteDataSource.getTopMovies()!!
-                    loadingData.value = false
-                } else {
-                    _error.value ="No Connection"
-                }
-            }catch (e: Exception){
-                _error.value = e.message?:"Error!"
-            }
-
-        }
-    }
-
-     fun getComingSoon() {
-        viewModelScope.launch {
-            try {
-                if (remoteDataSource.getComingSoon() != null) {
-                    _comingSoonData.value = remoteDataSource.getComingSoon()!!
-                    Log.i("TAG", "getComingSoon: "+remoteDataSource.getComingSoon()!!)
-                } else {
-                    _error.value ="No Connection"
-                }
-            }catch (e: Exception){
-                _error.value = e.message?:"Error!"
-            }
-        }
-    }
-
-     fun getInTheaters(){
-        viewModelScope.launch {
-            try{
-                if(remoteDataSource.getInTheaters() != null){
-                    _inTheatersData.value = remoteDataSource.getInTheaters()!!
-                }else{
-                    _error.value ="No Connection"
-                }
-            }catch (e: Exception){
-                _error.value = e.message?:"Error!"
-            }
-        }
-    }
-
-     fun getBoxOffice(){
-        viewModelScope.launch {
-            try{
-                if(remoteDataSource.getBoxOffice() != null){
-                    _boxOfficeData.value = remoteDataSource.getBoxOffice()!!
-                }else{
-                    _error.value ="No Connection"
-                }
-            }catch (e: Exception){
-                _error.value = e.message?:"Error!"
-            }
-        }
-    }
-    
-    fun getTrailer(id : String){
-        viewModelScope.launch {
-            try {
-                //loadingData.value = true
-                _trailerData.value = remoteDataSource.getTrailer(id)
-                //loadingData.value = false
-            }catch (e: Exception){
-                _error.value = e.message?:"Error"
+                loadingData.value = true
+                _topMoviesData.value = remoteDataSource.getTopMovies()
+                loadingData.value = false
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Error!"
                 loadingData.value = false
             }
+
         }
     }
+
+    fun getComingSoon() {
+        viewModelScope.launch {
+            try {
+                _comingSoonData.value = remoteDataSource.getComingSoon()
+
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Error!"
+            }
+        }
+    }
+
+    fun getInTheaters() {
+        viewModelScope.launch {
+            try {
+                _trailerData.value.clear()
+                _inTheatersData.value = remoteDataSource.getInTheaters()
+                sendIdForTrailer(_inTheatersData.value.items!!)
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Error!"
+            }
+        }
+    }
+
+    private fun sendIdForTrailer(items: List<Items>) {
+        val list = mutableListOf<Trailer>()
+        runBlocking  {
+        for(i in items){
+                val trailer = remoteDataSource.getTrailer(i.id?:"")
+                list.add(trailer)
+            }
+        }
+        _trailerData.value = list
+
+    }
+
+    fun getBoxOffice() {
+        viewModelScope.launch {
+            try {
+                _boxOfficeData.value = remoteDataSource.getBoxOffice()
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Error!"
+            }
+        }
+    }
+
+
 }

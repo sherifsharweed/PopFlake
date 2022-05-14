@@ -23,9 +23,9 @@ import com.shekoo.popflake.model.entities.ImageSlider
 import com.shekoo.popflake.utilities.Constants.TAG
 import com.shekoo.popflake.utilities.Network
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -39,8 +39,8 @@ class HomeFragment : Fragment() {
 
     //For image slider
     private var listOfImageForSlider: MutableList<ImageSlider> = mutableListOf()
-    private var dialog: AlertDialog? = null
 
+    private var dialog: AlertDialog? = null
 
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -69,30 +69,29 @@ class HomeFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenStarted {
-            homeViewModel.boxOfficeData.collect {
-                boxOfficeAdapter.addList(it.items ?: emptyList())
+            homeViewModel.inTheatersData.collect {
+                inTheaterAdapter.addList(it.items ?: emptyList())
             }
         }
 
-        lifecycleScope.launch {
-            homeViewModel.inTheatersData.collect {
-                inTheaterAdapter.addList(it.items ?: emptyList())
-                if (it.items?.size != 0) {
-                    for (i in it.items!!) {
-                        homeViewModel.getTrailer(i.id ?: "")
-                    }
-                }
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.boxOfficeData.collect {
+                boxOfficeAdapter.addList(it.items ?: emptyList())
+
             }
         }
 
         lifecycleScope.launch {
             homeViewModel.trailerData.collect {
-                listOfImageForSlider.add(ImageSlider(it.imDbId, it.title, it.thumbnailUrl, it.link))
+                listOfImageForSlider.clear()
+                for (i in it) {
+                    listOfImageForSlider.add(ImageSlider(i.imDbId, i.title, i.thumbnailUrl, i.link))
+                }
                 addSlider()
             }
         }
 
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenStarted {
             homeViewModel.loadingData.collectLatest {
                 if (it) showLoading() else hideLoading()
             }
@@ -106,11 +105,14 @@ class HomeFragment : Fragment() {
             }
         }
 
+
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+
+
         binding.apply {
             topMoviesTextView.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/chart/top"))
@@ -142,19 +144,18 @@ class HomeFragment : Fragment() {
                 refreshLayout.isRefreshing = false
             }
 
-            imageSlider.setItemClickListener(object : ItemClickListener {
+            binding.imageSlider.setItemClickListener(object : ItemClickListener {
                 override fun onItemSelected(position: Int) {
+                    //Toast.makeText(requireContext(), listOfImageForSlider[position].title, Toast.LENGTH_SHORT).show()
+                    val url = listOfImageForSlider[position].videoUrl
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    requireActivity().startActivity(intent)
                 }
 
             })
-
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        listOfImageForSlider.clear()
-    }
 
     private fun createAdapter() {
         topMoviesAdapter = AdapterTopMovies()
@@ -184,27 +185,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun addSlider() {
+        Log.i(TAG, "addSlider: size of array" + listOfImageForSlider.size)
         val imageList = ArrayList<SlideModel>()
-        for (i in 0 until listOfImageForSlider.size) {
-            if (listOfImageForSlider[i].id != "") {
+        for (i in listOfImageForSlider) {
+            if (i.id != "") {
                 imageList.add(
                     SlideModel(
-                        listOfImageForSlider[i].poster,
-                        listOfImageForSlider[i].title,
-                        ScaleTypes.FIT
+                        i.poster,
+                        i.title,
+                        ScaleTypes.CENTER_CROP
                     )
                 )
             }
         }
-        binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
-        binding.imageSlider.setItemClickListener(object : ItemClickListener{
-            override fun onItemSelected(position: Int) {
-                val url = listOfImageForSlider[position].videoUrl
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                requireActivity().startActivity(intent)
-            }
-
-        })
+        binding.imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
 
     }
 
